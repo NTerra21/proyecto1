@@ -5,13 +5,9 @@
 {% block contenidoQueCambia %}
 
 
-    <h1>Formulario - Agregar Alumno</h1>
+    <h1>Formulario:</h1> <br>
+    <h5>Agregar Alumno ↓</h5>
 
-    {% if miFormulario.errors %}
-
-    <p style="color: red;"> Están mal los datos, revisar</p>
-
-    {% endif %}
 
     <form action="" method="POST">{% csrf_token %}
 

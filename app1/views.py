@@ -1,15 +1,17 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.template import loader
-from app1.forms import AlumnoFormulario
-from app1.models import Estudiantes
+from app1.forms import AlumnoForm, ProfesorForm, CursoForm
+from app1.models import Estudiantes, Curso, Profesor
+
+
+def inicio(request):
+    return render(request, "inicio.html")
 
 
 def estudiantes(request):
 
     if request.method == 'POST':
 
-        miFormulario = AlumnoFormulario(request.POST)
+        miFormulario = AlumnoForm(request.POST)
 
         print(miFormulario)
 
@@ -25,14 +27,61 @@ def estudiantes(request):
 
     else:
 
-        miFormulario = AlumnoFormulario()
+        miFormulario = AlumnoForm()
 
     return render(request, "estudiantes.html", {"miFormulario": miFormulario})
 
 
-def inicio(request):
-    return render(request, "inicio.html")
-
 
 def profesor(request):
-    return render(request, 'profesores.html')
+
+        if request.method == 'POST':
+
+            miFormulario = ProfesorForm(request.POST)
+
+            print(miFormulario)
+
+            if miFormulario.is_valid:   #Si pasó la validación de Django
+
+                  informacion = miFormulario.cleaned_data
+
+                  profesor = Profesor (nombre=informacion['nombre'], apellido=informacion['apellido'],
+                   email=informacion['email'], profesion=informacion['profesion'])
+
+                  profesor.save()
+
+                  return render(request, "profesores.html")
+        else:
+
+            miFormulario= ProfesorForm() #Formulario vacio para construir el html
+
+        return render(request, "profesores.html", {"miFormulario":miFormulario})
+
+
+
+
+def cursos(request):
+
+      if request.method == 'POST':
+
+            miFormulario = CursoForm(request.POST) #aquí mellega toda la información del html
+
+            print(miFormulario)
+
+            if miFormulario.is_valid:   #Si pasó la validación de Django
+
+                  informacion = miFormulario.cleaned_data
+
+                  curso = Curso (nombre=informacion['curso'], camada=informacion['comision'])
+
+                  curso.save()
+
+                  return render(request, "curso.html") #Vuelvo al inicio o a donde quieran
+
+      else:
+
+            miFormulario= CursoForm() #Formulario vacio para construir el html
+
+      return render(request, "curso.html", {"miFormulario":miFormulario})
+
+

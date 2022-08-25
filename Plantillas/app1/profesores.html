@@ -5,7 +5,24 @@
 
 {% block contenidoQueCambia %}
 
-<h4>Profesor</h4>
- info de profesores
+
+    <h1>Formulario:</h1> <br>
+    <h5>Agregar Profesor ↓</h5>
+
+
+    <form action="" method="POST">{% csrf_token %}
+
+
+        <table>
+
+            {{ miFormulario.as_table }}
+
+
+        </table>
+
+
+        <input type="submit" value="Enviar">
+
+    </form>
 
 {% endblock %}
