@@ -1,0 +1,48 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+        <div class="text-center">
+            <img height="40px" src="{{url}}" >
+            <h3> ¡Bienvenido {{user.username}}!</h3>
+        </div>
+
+    <!--Aquí va lo que cambia, y lo asociado a está vista :) -->
+    <h1>{{mensaje}}</h1>
+
+
+    <h3>Ingresá la comisión que estás buscando:</h3>
+
+    <form action="/buscar/" method="GET">
+
+        <input type="number" name="comision" id="comision">
+
+        <input type="submit" value="Buscar">
+
+
+    </form>
+
+    {% if cursos %}
+
+    <p>Estamos buscando la comisión N°: {{comision}}</p>
+
+    <ul>
+	{% for curso in cursos %}
+		<li> {{curso.nombre}} </li>
+		<li> {{curso.comision}} </li>
+	{% endfor %}
+
+    </ul>
+
+    {% else %}
+    <p>El número de comisión ingresado no fue encontrado.</p>
+
+    {% endif %}
+
+    <p style="color: red;">{{respuesta}}</p>
+
+
+
+{% endblock %}

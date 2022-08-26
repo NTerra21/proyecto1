@@ -1,10 +1,11 @@
+
 from django.shortcuts import render
 from app1.forms import AlumnoForm, ProfesorForm, CursoForm
 from app1.models import Estudiantes, Curso, Profesor
 
 
 def inicio(request):
-    return render(request, "inicio.html")
+    return render(request, "buscador.html")
 
 
 def estudiantes(request):
@@ -83,5 +84,22 @@ def cursos(request):
             miFormulario= CursoForm() #Formulario vacio para construir el html
 
       return render(request, "curso.html", {"miFormulario":miFormulario})
+
+
+def buscar(request):
+
+    if request.GET['comision']:
+
+        comision = request.GET['comision']
+        cursos = Curso.objects.filter(comision__icontains=comision)
+
+        return render(request, "buscador.html", {"cursos": cursos, "comision": comision})
+
+    else:
+
+        respuesta = "No se encontraron datos."
+
+
+    return render(request, "buscador.html", {"respuesta": respuesta})
 
 
